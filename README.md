@@ -133,7 +133,9 @@ Edit terraform.tfvars to set values for your environment.
 
 ### 1. Clone the Repository
 git clone https://github.com/donfirst/hn.git
+
 cd hn
+
 ### 2. Login to Azure
 Authenticate with Azure using the Azure CLI:
 az login
