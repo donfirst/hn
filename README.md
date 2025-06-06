@@ -26,7 +26,7 @@ It demonstrates best practices for Infrastructure as Code (IaC), modular design,
 - SSH Keys: We are using two SSH keys—one for the bastion host and one for the VM host. Due to time constraints, SSH key management has not been included.
 - In this example, we are using the same SSH key for both the jump host and the virtual machine
 
-Edit loclas.tf to set locals for your SSH keys
+Edit locals.tf to set locals for your SSH keys
 
 <pre>
 locals {
