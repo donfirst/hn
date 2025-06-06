@@ -162,10 +162,10 @@ This will save your private key as id_rsa and your public key as id_rsa.pub in t
 Set the correct permissions (Linux/macOS):
 
 
-- chmod 600 ./id_rsa        # Only you can read or modify your private key
-
-
-- chmod 644 ./id_rsa.pub    # Public key is readable by others
+- chmod 600 ./id_rsa
+ Only you can read or modify your private key
+- chmod 644 ./id_rsa.pub
+ Public key is readable by others
 
 Note: SSH key management is outside the scope of this exercise.
 
