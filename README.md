@@ -76,7 +76,7 @@ locals {
 | `terraform.tfvarss`         | Example variable values                                                                     |
 | `locals.tf`                | Define local values                                                                          |
 | `docs/`                    | Project documentation                                                                        |
-| `ssh/`                     | your ssh keys                                                                                |
+| `ssh/`                     | Your ssh keys                                                                                |
 | `modules/`                 | Contains reusable, logically separated Terraform modules.                                    |
 | `modules/networking/`      | Provisions the virtual network, public and private subnets.                                  |
 | `modules/compute/`         | Deploys private VMs, configures NSGs, and mounts Azure File Share.                           |
@@ -96,11 +96,9 @@ Edit terraform.tfvars to set values for your environment.
     resource_group_name = "MyResourceGroup"
 
     admin_username      = "adminUser"
-    admin_ssh_key       = "<your-ssh-public-key>"
     allowed_ssh_ips     = ["<your-ip>/32"]
 
     jump_box_admin_username  = "jumpadmin"
-    jump_box_admin_ssh_key   = "<your-ssh-public-key>"
     jump_box_allowed_ssh_ips = ["<your-ip>/32"]
 
 
