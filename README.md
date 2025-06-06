@@ -160,10 +160,16 @@ When prompted for the file in which to save the key, enter ./id_rsa.
 This will save your private key as id_rsa and your public key as id_rsa.pub in the ssh directory.
 
 Set the correct permissions (Linux/macOS):
+
+
 chmod 600 ./id_rsa        # Only you can read or modify your private key
+
+
 chmod 644 ./id_rsa.pub    # Public key is readable by others
 
 Note: SSH key management is outside the scope of this exercise.
+
+
 If you want to use a different location for your keys, update the path in locals.tf
 
 ### 4. Initialize Terraform
