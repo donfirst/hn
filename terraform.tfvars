@@ -15,7 +15,6 @@ public_subnet_prefixes  = ["10.0.1.0/24"] # Public subnet prefixes
 # ---------------------------
 # Compute Module
 # ---------------------------
-# admin_ssh_key   = file("./ssh/id_rsa.pub")          # SSH key for admin user
 admin_username  = "adminUser"                       # Admin username for VMs
 allowed_ssh_ips = ["192.168.1.0/24", "10.0.0.0/16"] # Allowed SSH IPs for VMs
 
