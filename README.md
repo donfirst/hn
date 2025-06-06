@@ -138,18 +138,25 @@ cd hn
 
 ### 2. Login to Azure
 Authenticate with Azure using the Azure CLI:
+
+
 az login
+
+
 This should be sufficient to authenticate you with Microsoft Entra ID (formerly Azure AD).
 If you encounter issues, you can try:
+
 az account get-access-token
 
 ### 3.Generate SSH Keys
 Navigate to the ssh directory in the root of the repository:
+
 cd ssh
 
 ssh-keygen -m PEM -t rsa -b 4096 -C "azureuser@myserver"
 
 When prompted for the file in which to save the key, enter ./id_rsa.
+
 This will save your private key as id_rsa and your public key as id_rsa.pub in the ssh directory.
 
 Set the correct permissions (Linux/macOS):
@@ -161,6 +168,7 @@ If you want to use a different location for your keys, update the path in locals
 
 ### 4. Initialize Terraform
 Navigate to the root directory of the repository:
+
 cd ..
 
 terraform init
