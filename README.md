@@ -88,7 +88,7 @@ locals {
 ---
 ##  Configure Variables
 
-Edit terraform.tfvarss to set values for your environment.
+Edit terraform.tfvars to set values for your environment.
     Example:
 
     location            = "UK South"
