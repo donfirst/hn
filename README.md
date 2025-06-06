@@ -14,6 +14,12 @@ It demonstrates best practices for Infrastructure as Code (IaC), modular design,
 - Azure Storage Account with lifecycle management
 - Azure File Share mounted to VMs via SMB
 
+**Diagram**
+
+![Architecture Diagram](docs/diagram.png)
+
+
+
 **Limitations**
 
 - User Management: Due to time limitations and the fact that user management was optional, the mentioned module has not been delivered.
