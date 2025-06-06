@@ -26,7 +26,7 @@ It demonstrates best practices for Infrastructure as Code (IaC), modular design,
 - SSH Keys: We are using two SSH keys—one for the bastion host and one for the VM host. Due to time constraints, SSH key management has not been included.
 - In this example, we are using the same SSH key for both the jump host and the virtual machine
 
-Edit main.tf to set locals for your ssh key/s
+Edit main.tf to set locals for your SSH keys
 
 <pre>
 locals {
@@ -46,7 +46,7 @@ locals {
 
 ---
 
-## Prroject Structure 
+## Prroject Structure
 
 
 <pre>
@@ -54,9 +54,10 @@ locals {
 ├── variables.tf
 ├── outputs.tf
 ├── providers.tf
-├── terraform.tfvar
+├── terraform.tfvars
 ├── locals.tf
 ├── ssh/
+├── docs/
 ├── modules/
 │   ├── networking/
 │   ├── compute/
@@ -72,8 +73,9 @@ locals {
 | `variables.tf`             | Declares all input variables used throughout the project.                                    |
 | `outputs.tf`               | Defines outputs such as storage account name, VM IPs, and jump box public IP.                |
 | `providers.tf`             | Specifies required Terraform providers and their versions.                                   |
-| `terraform.tfvars`         | Example variable values                                                                      |
+| `terraform.tfvarss`         | Example variable values                                                                     |
 | `locals.tf`                | Define local values                                                                          |
+| `docs/`                    | Project documentation                                                                        |
 | `ssh/`                     | your ssh keys                                                                                |
 | `modules/`                 | Contains reusable, logically separated Terraform modules.                                    |
 | `modules/networking/`      | Provisions the virtual network, public and private subnets.                                  |
@@ -86,7 +88,7 @@ locals {
 ---
 ##  Configure Variables
 
-Edit terraform.tfvars to set values for your environment.
+Edit terraform.tfvarss to set values for your environment.
     Example:
 
     location            = "UK South"
@@ -102,7 +104,7 @@ Edit terraform.tfvars to set values for your environment.
     jump_box_allowed_ssh_ips = ["<your-ip>/32"]
 
 
-    
+
 
 ## Architecture
 
@@ -132,15 +134,40 @@ Edit terraform.tfvars to set values for your environment.
 ## Usage
 
 ### 1. Clone the Repository
-bash git clone <your-repo-url> cd <repo-directory>
+git clone https://github.com/donfirst/hn.git
+cd hn
 ### 2. Login to Azure
+Authenticate with Azure using the Azure CLI:
 az login
-### 3. Initialize Terraform
-terraform init
-### 4. Plan the Deployment
-terraform plan
-### 5. Apply the Deployment
+This should be sufficient to authenticate you with Microsoft Entra ID (formerly Azure AD).
+If you encounter issues, you can try:
+az account get-access-token
 
+### 3.Generate SSH Keys
+Navigate to the ssh directory in the root of the repository:
+cd ssh
+
+ssh-keygen -m PEM -t rsa -b 4096 -C "azureuser@myserver"
+
+When prompted for the file in which to save the key, enter ./id_rsa.
+This will save your private key as id_rsa and your public key as id_rsa.pub in the ssh directory.
+
+Set the correct permissions (Linux/macOS):
+chmod 600 ./id_rsa        # Only you can read or modify your private key
+chmod 644 ./id_rsa.pub    # Public key is readable by others
+
+Note: SSH key management is outside the scope of this exercise.
+If you want to use a different location for your keys, update the path in locals.tf
+
+### 4. Initialize Terraform
+Navigate to the root directory of the repository:
+cd ..
+
+terraform init
+
+### 5. Plan the Deployment
+terraform plan
+### 6. Apply the Deployment
 terraform apply
 
 ---
@@ -148,7 +175,8 @@ terraform apply
 ## Outputs
 
 After deployment, Terraform will output:
-
+- ***admin_username***
+- ***jump_box_admin_username***
 - File Share Name: The name assigned to the file share within the storage account.
 - Jump Box NIC ID: The Network Interface Card (NIC) ID associated with the jump box VM.
 - **Jump Box Public IP:** The public IP address assigned to the jump box for external access.
@@ -165,8 +193,41 @@ After deployment, Terraform will output:
 ## Accessing the Infrastructure
 
 1. **SSH to Jump Box:**
-ssh -i <jump_host_private_key> <jump_box_admin_username>@<jump_box_public_ip> \
-  ssh -i <target_machine_private_key> <target_machine_username>@<target_machine_private_ip>
+
+- Edit the SSH Config File: Open or create the SSH config file:
+<pre>
+vi ~/.ssh/config
+</pre>
+
+- Add the Configuration: Add the following entries to define the bastion host and target VM:
+
+<pre>
+Host bastion
+    HostName BASTION_PUBLIC_IP
+    User jumpadmin
+    IdentityFile <path to your repo/ssh/id_rsa >
+
+Host target-vm
+    HostName TARGET_VM_PRIVATE_IP
+    User adminUser
+    IdentityFile <path to your repo/ssh/id_rsa >
+    ProxyJump bastion
+</pre>
+
+- Connect to the Target VM: After saving the config file, you can connect to the target VM with a simple command:
+
+** ssh target-vm **
+
+Explanation:
+- Host bastion: Defines the bastion host.
+- HostName BASTION_PUBLIC_IP: The public IP of the bastion host.
+- User jumpadmin: The username for the bastion host.
+- IdentityFile **example** "~/.ssh/id_rsa_bastion": The private key for the bastion host.
+- Host target-vm: Defines the target VM.
+- HostName TARGET_VM_PRIVATE_IP: The private IP of the target VM.
+- User adminUser: The username for the target VM.
+- IdentityFile **example** "~/.ssh/id_rsa_vm": The private key for the target VM.
+- ProxyJump bastion: Specifies that the bastion host should be used as a jump host.
 
 3. **Azure File Share:**
 
