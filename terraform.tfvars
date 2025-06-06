@@ -50,4 +50,4 @@ jump_box_name            = "jump-box"                     # Jump box name
 jump_box_offer           = "0001-com-ubuntu-server-jammy" # Jump box image offer
 jump_box_publisher       = "Canonical"                    # Jump box image publisher
 jump_box_sku             = "22_04-lts-gen2"               # Jump box image SKU
-jump_box_vm_size         = "Standard_B1s"                                                                                                                                                                                                                                                       # Jump box VM size
+jump_box_vm_size         = "Standard_B1s"                 # Jump box VM size
