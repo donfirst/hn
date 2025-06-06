@@ -216,7 +216,7 @@ Host target-vm
 
 - Connect to the Target VM: After saving the config file, you can connect to the target VM with a simple command:
 
-** ssh target-vm **
+**ssh target-vm**
 
 Explanation:
 - Host bastion: Defines the bastion host.
